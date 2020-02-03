@@ -3,6 +3,7 @@ package com.openclassrooms.netapp.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,10 @@ public class MainFragment extends Fragment {
     @BindView(R.id.fragment_main_recycler_view)
     RecyclerView recyclerView; // 1 - Declare RecyclerView
 
+    // 1 - Declare the SwipeRefreshLayout
+    @BindView(R.id.fragment_main_swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     //FOR DATA
     private Disposable disposable;
     // 2 - Declare list of users (GithubUser) & Adapter
@@ -43,6 +48,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
         this.configureRecyclerView(); // - 4 Call during UI creation
+        this.configureSwipeRefreshLayout();
         this.executeHttpRequestWithRetrofit(); // 5 - Execute stream after UI creation
         return view;
     }
@@ -67,6 +73,16 @@ public class MainFragment extends Fragment {
         this.recyclerView.setAdapter(this.adapter);
         // 3.4 - Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    // 2 - Configure the SwipeRefreshLayout
+    private void configureSwipeRefreshLayout(){
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                executeHttpRequestWithRetrofit();
+            }
+        });
     }
 
     // -------------------
@@ -98,6 +114,9 @@ public class MainFragment extends Fragment {
     // -------------------
 
     private void updateUI(List<GithubUser> users){
+        // 3 - Stop refreshing and clear actual list of users
+        swipeRefreshLayout.setRefreshing(false);
+        githubUsers.clear();
         githubUsers.addAll(users);
         adapter.notifyDataSetChanged();
     }
