@@ -14,6 +14,14 @@ import java.util.List;
 
 public class GithubUserAdapter extends RecyclerView.Adapter<GithubUserViewHolder> {
 
+    // 1 - Create interface for callback
+    public interface Listener {
+        void onClickDeleteButton(int position);
+    }
+
+    // 2 - Declaring callback
+    private final Listener callback;
+
     // FOR DATA
     private List<GithubUser> githubUsers;
 
@@ -21,9 +29,10 @@ public class GithubUserAdapter extends RecyclerView.Adapter<GithubUserViewHolder
     private RequestManager glide;
 
     // CONSTRUCTOR
-    public GithubUserAdapter(List<GithubUser> githubUsers, RequestManager glide) {
+    public GithubUserAdapter(List<GithubUser> githubUsers, RequestManager glide, Listener callback) {
         this.githubUsers = githubUsers;
         this.glide = glide;
+        this.callback = callback;
     }
 
     @Override
@@ -41,7 +50,7 @@ public class GithubUserAdapter extends RecyclerView.Adapter<GithubUserViewHolder
     // UPDATE VIEW HOLDER WITH A GITHUBUSER
     @Override
     public void onBindViewHolder(GithubUserViewHolder viewHolder, int position) {
-        viewHolder.updateWithGithubUser(this.githubUsers.get(position), this.glide);
+        viewHolder.updateWithGithubUser(this.githubUsers.get(position), this.glide, this.callback);
     }
 
     // RETURN THE TOTAL COUNT OF ITEMS IN THE LIST

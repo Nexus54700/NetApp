@@ -28,7 +28,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements GithubUserAdapter.Listener{
 
     // FOR DESIGN
     @BindView(R.id.fragment_main_recycler_view)
@@ -81,6 +81,12 @@ public class MainFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onClickDeleteButton(int position) {
+        GithubUser user = adapter.getUser(position);
+        Toast.makeText(getContext(), "You are trying to delete user : "+user.getLogin(), Toast.LENGTH_SHORT).show();
+    }
+
     // -----------------
     // CONFIGURATION
     // -----------------
@@ -90,7 +96,7 @@ public class MainFragment extends Fragment {
         // 3.1 - Reset list
         this.githubUsers = new ArrayList<>();
         // 3.2 - Create adapter passing the list of users
-        this.adapter = new GithubUserAdapter(this.githubUsers, Glide.with(this));
+        this.adapter = new GithubUserAdapter(this.githubUsers, Glide.with(this), this);
         // 3.3 - Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // 3.4 - Set layout manager to position the items
