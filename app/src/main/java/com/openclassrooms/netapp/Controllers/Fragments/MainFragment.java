@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.netapp.Controllers.Models.GithubUser;
 import com.openclassrooms.netapp.Controllers.Utils.GithubStreams;
 import com.openclassrooms.netapp.Controllers.Views.GithubUserAdapter;
@@ -61,7 +62,7 @@ public class MainFragment extends Fragment {
         // 3.1 - Reset list
         this.githubUsers = new ArrayList<>();
         // 3.2 - Create adapter passing the list of users
-        this.adapter = new GithubUserAdapter(this.githubUsers);
+        this.adapter = new GithubUserAdapter(this.githubUsers, Glide.with(this));
         // 3.3 - Attach the adapter to the recyclerview to populate items
         this.recyclerView.setAdapter(this.adapter);
         // 3.4 - Set layout manager to position the items
