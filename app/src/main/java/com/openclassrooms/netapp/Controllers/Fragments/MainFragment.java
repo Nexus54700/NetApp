@@ -16,12 +16,14 @@ import com.openclassrooms.netapp.Controllers.Utils.NetworkAsyncTask;
 import com.openclassrooms.netapp.R;
 
 import java.util.List;
-import java.util.Observable;
+import io.reactivex.Observable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.ObservableSource;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -91,7 +93,29 @@ public class MainFragment extends Fragment implements NetworkAsyncTask.Listeners
     // 3 - Create Stream and execute it
     private void streamShowString(){
         this.disposable = this.getObservable()
-                .subscribeWith(getSubscriber());
+                .map(getFunctionUpperCase())
+                .flatMap(getSecondObservable())
+                .subscribeWith(getSubscriber())
+        ;
+    }
+
+    private Function<String,Observable<String>> getSecondObservable() {
+        return new Function<String, Observable<String>>() {
+            @Override
+            public Observable<String> apply(String previousString) throws Exception {
+                return Observable.just(previousString+" I love Openclassrooms !");
+            }
+        };
+    }
+
+    private Function<String,String> getFunctionUpperCase() {
+        return new Function<String, String>() {
+                @Override
+                    public String apply(String s) throws Exception {
+                    return s.toUpperCase();
+                }
+
+        };
     }
 
     // 5 - Dispose subscription
