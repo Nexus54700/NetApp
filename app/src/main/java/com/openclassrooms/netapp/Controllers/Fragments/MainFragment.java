@@ -6,13 +6,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.netapp.Controllers.Models.GithubUser;
 import com.openclassrooms.netapp.Controllers.Utils.GithubStreams;
+import com.openclassrooms.netapp.Controllers.Utils.ItemClickSupport;
 import com.openclassrooms.netapp.Controllers.Views.GithubUserAdapter;
 import com.openclassrooms.netapp.R;
 
@@ -50,6 +53,7 @@ public class MainFragment extends Fragment {
         this.configureRecyclerView(); // - 4 Call during UI creation
         this.configureSwipeRefreshLayout();
         this.executeHttpRequestWithRetrofit(); // 5 - Execute stream after UI creation
+        this.configureOnClickRecyclerView();
         return view;
     }
 
@@ -57,6 +61,24 @@ public class MainFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         this.disposeWhenDestroy();
+    }
+
+    // -----------------
+    // ACTION
+    // -----------------
+
+    // 1 - Configure item click on RecyclerView
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        // 1 - Get user from adapter
+                        GithubUser user = adapter.getUser(position);
+                        // 2 - Show result in a Toast
+                        Toast.makeText(getContext(), "You clicked on user : "+user.getLogin(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     // -----------------
