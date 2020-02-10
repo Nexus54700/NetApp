@@ -1,7 +1,9 @@
 package com.openclassrooms.netapp.Controllers.Activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.openclassrooms.netapp.R;
 
@@ -13,5 +15,10 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        //Add back button
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Detail");
+
     }
+
 }

@@ -1,18 +1,21 @@
 package com.openclassrooms.netapp.Controllers.Fragments;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.openclassrooms.netapp.Controllers.Activities.DetailActivity;
+import com.openclassrooms.netapp.Controllers.Activities.MainActivity;
 import com.openclassrooms.netapp.Controllers.Models.GithubUser;
 import com.openclassrooms.netapp.Controllers.Utils.GithubStreams;
 import com.openclassrooms.netapp.Controllers.Utils.ItemClickSupport;
@@ -77,9 +80,16 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
                         GithubUser user = adapter.getUser(position);
                         // 2 - Show result in a Toast
                         Toast.makeText(getContext(), "You clicked on user : "+user.getLogin(), Toast.LENGTH_SHORT).show();
+
+                        Intent DetailActivity = new Intent(getActivity(),DetailActivity.class);
+                        startActivity(DetailActivity);
                     }
+
                 });
+
     }
+
+
 
     @Override
     public void onClickDeleteButton(int position) {
@@ -117,6 +127,8 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
     // HTTP (RxJAVA)
     // -------------------
 
+
+
     private void executeHttpRequestWithRetrofit(){
         this.disposable = GithubStreams.streamFetchUserFollowing("JakeWharton").subscribeWith(new DisposableObserver<List<GithubUser>>() {
             @Override
@@ -133,9 +145,13 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
         });
     }
 
+
+
     private void disposeWhenDestroy(){
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
+
+
 
     // -------------------
     // UPDATE UI
