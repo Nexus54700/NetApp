@@ -1,7 +1,7 @@
 package com.openclassrooms.netapp.Controllers.Fragments;
 
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.netapp.Controllers.Activities.DetailActivity;
-import com.openclassrooms.netapp.Controllers.Activities.MainActivity;
 import com.openclassrooms.netapp.Controllers.Models.GithubUser;
 import com.openclassrooms.netapp.Controllers.Utils.GithubStreams;
 import com.openclassrooms.netapp.Controllers.Utils.ItemClickSupport;
@@ -31,7 +30,16 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 
-public class MainFragment extends Fragment implements GithubUserAdapter.Listener{
+public class MainFragment extends Fragment implements GithubUserAdapter.Listener, View.OnClickListener{
+
+
+    //2 - Declare callback
+    private OnButtonClickedListener mCallback;
+
+    // 1 - Declare our interface that will be implemented by any container activity
+    public interface OnButtonClickedListener {
+        public void onButtonClicked(View view);
+    }
 
     // FOR DESIGN
     @BindView(R.id.fragment_main_recycler_view)
@@ -52,6 +60,7 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        view.findViewById(R.id.fragment_main_recycler_view).setOnClickListener(this);
         ButterKnife.bind(this, view);
         this.configureRecyclerView(); // - 4 Call during UI creation
         this.configureSwipeRefreshLayout();
@@ -59,6 +68,18 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
         this.configureOnClickRecyclerView();
         return view;
     }
+    
+
+    // --------------
+    // ACTIONS
+    // --------------
+
+    @Override
+    public void onClick(View v) {
+        // 5 - Spread the click to the parent activity
+        mCallback.onButtonClicked(v);
+    }
+
 
     @Override
     public void onDestroy() {
@@ -164,4 +185,5 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
         githubUsers.addAll(users);
         adapter.notifyDataSetChanged();
     }
+
 }
