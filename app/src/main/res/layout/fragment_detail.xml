@@ -11,12 +11,12 @@
         android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageView"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:id="@+id/profileImageView"
             android:layout_centerHorizontal="true"
-            android:gravity="top"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:gravity="top" />
 
         <TextView
             android:id="@+id/usernameTextView"
@@ -25,47 +25,47 @@
             android:layout_below="@+id/profileImageView"
             android:layout_centerHorizontal="true"
             android:textColor="#199"
-            android:textSize="28sp"/>
+            android:textSize="28sp" />
 
 
         <LinearLayout
+            android:id="@+id/titleLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/titleLinearLayout"
             android:layout_marginTop="350dp">
 
             <TextView
                 android:id="@+id/followingTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="following"
-                tools:ignore="HardcodedText"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="following"
                 android:textColor="#199"
-                android:textSize="28sp"/>
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/followersTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="followers"
-                tools:ignore="HardcodedText"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="followers"
                 android:textColor="#199"
-                android:textSize="28sp"/>
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/repositoriesTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="repositories"
-                tools:ignore="HardcodedText"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="repositories"
                 android:textColor="#199"
-                android:textSize="28sp"/>
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,35 +78,35 @@
                 android:id="@+id/followingNumberTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="00..."
-                tools:ignore="HardcodedText"
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="00..."
                 android:textColor="#199"
-                android:textSize="28sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/followersNumberTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="00..."
                 android:gravity="center"
+                android:text="00..."
                 android:textColor="#199"
-                android:textSize="28sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/repositoriesNumberTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="00..."
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="00..."
                 android:textColor="#199"
-                android:textSize="28sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
         </LinearLayout>

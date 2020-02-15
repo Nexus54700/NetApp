@@ -1,7 +1,6 @@
 package com.openclassrooms.netapp.Controllers.Fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -68,7 +67,7 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
         this.configureOnClickRecyclerView();
         return view;
     }
-    
+
 
     // --------------
     // ACTIONS
@@ -100,9 +99,10 @@ public class MainFragment extends Fragment implements GithubUserAdapter.Listener
                         // 1 - Get user from adapter
                         GithubUser user = adapter.getUser(position);
                         // 2 - Show result in a Toast
-                        Toast.makeText(getContext(), "You clicked on user : "+user.getLogin(), Toast.LENGTH_SHORT).show();
+
 
                         Intent DetailActivity = new Intent(getActivity(),DetailActivity.class);
+                        DetailActivity.putExtra("UserSelected", user.getLogin());
                         startActivity(DetailActivity);
                     }
 
